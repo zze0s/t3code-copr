@@ -1,0 +1,39 @@
+name: Track upstream nightly
+
+on:
+  schedule:
+    # Upstream ships a nightly roughly every 6.5 hours.
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Upstream tag to package (default: newest nightly)"
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-spec
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update spec
+        id: update
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ./scripts/update.sh "${{ inputs.tag }}"
+
+      # The push fires the COPR webhook, which rebuilds the package.
+      - name: Commit and push
+        if: steps.update.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "update: ${{ steps.update.outputs.version }}"
+          git push
