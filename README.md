@@ -16,7 +16,7 @@ A new upstream nightly usually reaches the repo within about 45 minutes.
 ## Install
 
 ```sh
-sudo dnf copr enable <copr-user>/t3code-nightly
+sudo dnf copr enable zze0s/t3code-nightly
 sudo dnf install t3code-nightly
 ```
 
