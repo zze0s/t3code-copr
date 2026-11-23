@@ -1,7 +1,7 @@
 # Managed by scripts/update.sh. Do not edit these four lines by hand.
 %global base_version 0.1.12
-%global nightly_tag 20261123.5124
-%global deb_sha256 167a47c94cde7881324970a336da3b2c95138f6492b563e1b928f34751827c7a
+%global nightly_tag 20261123.5151
+%global deb_sha256 9758047cd4af1c718bba639e8d005dc5459d806b9d9dcdff6d283ae5affb3dcb
 %global pkg_rel 1
 
 %global upstream_version %{base_version}-nightly.%{nightly_tag}
